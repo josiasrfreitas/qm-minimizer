@@ -27,9 +27,17 @@ OBJS      := $(SRCS:src/%.cc=$(BUILD_DIR)/%.o)
 DEPS      := $(OBJS:.o=.d)
 BIN       := $(BUILD_DIR)/qm
 
-.PHONY: all clean test bench run help
+.PHONY: all clean rebuild demo test bench run help
 
 all: $(BIN)
+
+# Always-from-scratch build. Idempotent: rebuilds identically every time.
+rebuild: clean
+	@$(MAKE) --no-print-directory all
+
+# Live demo: wipe state, build, run the smoke tests. One command.
+demo: clean
+	@$(MAKE) --no-print-directory test
 
 $(BIN): $(OBJS)
 	$(CXX) $(OBJS) $(LDFLAGS) -o $@
@@ -63,6 +71,8 @@ help:
 	@echo "Targets:"
 	@echo "  all (default)  Build $(BIN)"
 	@echo "  clean          Remove $(BUILD_DIR)/ and tempos.csv"
+	@echo "  rebuild        clean + all (always from scratch)"
+	@echo "  demo           clean + test (full from-scratch run for demos)"
 	@echo "  test           Build + minimize the 5 small PLAs in data/tests/"
 	@echo "  bench          Build + run on data/benchmark/, write tempos.csv"
 	@echo "  run            Build + minimize a single sample PLA with --stats"
