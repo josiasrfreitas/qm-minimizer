@@ -41,3 +41,5 @@ callgrind.out*
 *.min.pla
 results/
 benchmarks/*.csv
+tempos.csv
+report.html

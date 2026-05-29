@@ -27,7 +27,7 @@ OBJS      := $(SRCS:src/%.cc=$(BUILD_DIR)/%.o)
 DEPS      := $(OBJS:.o=.d)
 BIN       := $(BUILD_DIR)/qm
 
-.PHONY: all clean rebuild demo test bench run help
+.PHONY: all clean rebuild demo test bench report run help
 
 all: $(BIN)
 
@@ -47,7 +47,7 @@ $(BUILD_DIR)/%.o: src/%.cc
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $< -o $@
 
 clean:
-	rm -rf $(BUILD_DIR) tempos.csv
+	rm -rf $(BUILD_DIR) tempos.csv report.html
 
 run: $(BIN)
 	./$(BIN) data/tests/ex01_funcao3var.pla --stats
@@ -67,6 +67,10 @@ test: $(BIN)
 bench: $(BIN)
 	./$(BIN) --bench data/benchmark/ --csv tempos.csv
 
+# Build + run benchmark + write HTML dashboard + open it in the browser.
+report: $(BIN)
+	./$(BIN) --bench data/benchmark/ --csv tempos.csv --html report.html --open
+
 help:
 	@echo "Targets:"
 	@echo "  all (default)  Build $(BIN)"
@@ -75,6 +79,7 @@ help:
 	@echo "  demo           clean + test (full from-scratch run for demos)"
 	@echo "  test           Build + minimize the 5 small PLAs in data/tests/"
 	@echo "  bench          Build + run on data/benchmark/, write tempos.csv"
+	@echo "  report         Build + bench + write report.html + open in browser"
 	@echo "  run            Build + minimize a single sample PLA with --stats"
 	@echo ""
 	@echo "Variables:"
