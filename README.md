@@ -44,14 +44,26 @@ qm-minimizer/
 
 ## Build
 
-Requer **CMake ≥ 3.16** e compilador com suporte a **C++17** (testado com Clang 14+ e GCC 11+).
+Requer apenas um compilador com suporte a **C++17** (testado com Apple Clang 17 e GCC 11+). Não tem dependências externas.
 
 ```bash
-cmake -B build -DCMAKE_BUILD_TYPE=Release
-cmake --build build -j
+make            # build/qm em modo release (-O3 -march=native)
+make test       # smoke tests nos PLAs pequenos
+make bench      # roda o IWLS, gera tempos.csv
+make clean
 ```
 
-O binário fica em `build/qm`.
+Alternativamente, build manual em uma linha:
+
+```bash
+clang++ -std=c++17 -O2 -Iinclude src/*.cc -pthread -o qm
+```
+
+Para CMake (opcional, mesmo resultado):
+
+```bash
+cmake -B build -DCMAKE_BUILD_TYPE=Release && cmake --build build -j
+```
 
 ## Uso
 
@@ -64,6 +76,9 @@ O binário fica em `build/qm`.
 
 # Roda em diretório inteiro, gera CSV de tempos
 ./build/qm --bench data/benchmark/ --csv tempos.csv
+
+# Controla número de threads (default = hardware concurrency)
+./build/qm data/benchmark/ex08.train.pla --threads 4
 ```
 
 Flags disponíveis (resumo):
