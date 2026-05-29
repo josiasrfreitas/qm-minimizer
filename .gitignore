@@ -1,0 +1,43 @@
+# Build artifacts
+build/
+out/
+dist/
+*.o
+*.obj
+*.a
+*.lib
+*.so
+*.dylib
+*.dll
+*.exe
+
+# CMake
+CMakeCache.txt
+CMakeFiles/
+CMakeScripts/
+cmake_install.cmake
+Makefile
+compile_commands.json
+CTestTestfile.cmake
+_deps/
+
+# Editor / IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Profiling / debug
+*.dSYM/
+*.gcda
+*.gcno
+*.gcov
+perf.data*
+callgrind.out*
+
+# Generated outputs
+*.min.pla
+results/
+benchmarks/*.csv
