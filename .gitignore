@@ -11,12 +11,12 @@ dist/
 *.dll
 *.exe
 
-# CMake
+# CMake (Makefile is hand-written at the repo root; build/Makefile lives
+# under the already-ignored build/ tree)
 CMakeCache.txt
 CMakeFiles/
 CMakeScripts/
 cmake_install.cmake
-Makefile
 compile_commands.json
 CTestTestfile.cmake
 _deps/
@@ -41,3 +41,5 @@ callgrind.out*
 *.min.pla
 results/
 benchmarks/*.csv
+tempos.csv
+report.html
